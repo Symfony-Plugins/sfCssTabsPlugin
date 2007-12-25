@@ -1,0 +1,251 @@
+= sfCssTabs plugin =
+
+Plugin que genera de forma dinámica paneles de pestañas (tabPanel) con listas (XHTML válido), al estilo "Wordpress Admin", dependiendo del módulo actual y (si existe) la primera acción de este.
+
+El panel de pestañas puede contener 2 niveles: Pestañas principales y Pestañas secundarias.
+
+== Screenshot ==
+
+[[Image(screenshot.jpg)]]
+
+== Instalación ==
+Instalar el plugin
+
+{{{
+$ php symfony plugin-install http://plugins.symfony-project.com/sfCssTabsPlugin
+}}}
+
+== Uso ==
+ 1. Abre el archivo '''"layout.php"''' localizado en: <my_project>/apps/<myapp>/templates/
+ 
+ 2. Coloca el código necesario entre las etiquetas <body></body> para llamar al plugin. Revisa el apartado ¿Cómo llamar al plugin?
+ 
+ 3. Copia el archivo de ejemplo '''sfCssTabs.css''' que esta en: <my_project>/web/sfCssTabsPlugin/css/; en la carpeta: 
+    <my_project>/web/css/
+    
+ 4. Abre el archivo '''"view.yml"''' localizado en: <my_project>/apps/<myapp>/config/
+ 
+ 5. Agrega el archivo CSS de ejemplo en el apartado '''stylesheets'''
+
+ {{{
+ stylesheets: [main, sfCssTabs]
+ }}}
+
+== Configuración ==
+Abre el archivo '''"ctSite.yml"''' localizado en: <my_project>/plugins/sfCssTabsPlugin/config/
+
+=== Configuración general: ''configTabs'' ===
+{{{
+configTabs:
+  div:    {}
+  mt_ul:  {}
+  mt_li:  {}
+  mt_a:   {}
+  st_ul:  {}
+  st_li:  {}
+  st_a:   {}
+}}}
+
+ 1. El contenido dentro de '''{}''' funciona exactamente igual que el tercer parámetro del Helper link_to().
+ 
+ 2. '''div'''. Vacío por defecto. Si se agrega contenido dentro de '''{}''', las pestañas son envueltas con las etiquetas <div></div> junto con ese contenido. Ejemplo
+ 
+ {{{
+ div:  {id: navcontainer, style: 'padding:2px'}
+ }}}
+ 
+Las tres siguientes claves comienzan con '''mt_''' y esta configuración se aplica solo a las pestañas principales.
+ 
+ 1. '''mt_ul'''. Se aplica a las etiquetas <ul></ul> de las pestañas principales. Ejemplo:
+ 
+ {{{
+ mt_ul:  {id: adminmenu}
+ }}}
+ 
+ 2. '''mt_li'''. Se aplica solo a las etiquetas <li></li> de las pestañas principales y que coinciden con el módulo o módulo/acción actual. Ejemplo:
+ 
+ {{{
+ mt_li:  {id: active}
+ }}}
+ 
+ 3. '''mt_a'''. Se aplica a las etiquetas <a></a> de las pestañas principales y que coinciden con el módulo o módulo/acción actual. Ejemplo:
+ 
+ {{{
+ mt_a:  {class: current}
+ }}}
+ 
+Las tres siguientes claves comienzan con '''st_''' y esta configuración se aplica solo a las pestañas secundarias.
+ 
+ 1. '''st_ul'''. Se aplica a las etiquetas <ul></ul> de las pestañas secundarias. Ejemplo:
+ 
+ {{{
+ st_ul:  {id: submenu}
+ }}}
+ 
+ 2. '''st_li'''. Se aplica a las etiquetas <li></li> de las pestañas secundarias y que coinciden con el módulo o módulo/acción actual. Ejemplo:
+ 
+ {{{
+ st_li:  {id: activeII}
+ }}}
+ 
+ 3. '''st_a'''. Se aplica a las etiquetas <a></a> de las pestañas secundarias y que coinciden con el módulo o módulo/acción actual. Ejemplo:
+ 
+ {{{
+ st_a:  {class: current}
+ }}}
+
+=== Configuración de las pestañas principales y secundarias: ''mainTabs'' & ''subTabs'' ===
+{{{
+# Configuración de las pestañas principales
+mainTabs:
+  - label:       ''
+    module:      ''
+    action:      ''
+    linkOptions: {}
+
+# Configuración de las pestañas secundarias
+subTabs:
+  - label:       ''
+    module:      ''
+    action:      ''
+    linkOptions: {}
+    parentTab:   ''
+}}}
+
+ 1. '''label'''. Este valor es agregado al primer parámetro del helper link_to() y es el texto que se muestra de la pestaña. Ejemplo:
+ 
+ {{{
+ label:  Main Page
+ }}}
+ 
+ 2. '''module'''. El nombre del módulo al cual la pestaña pertenece. Este valor es agregado el segundo parámetro del helper link_to(). Ejemplo:
+ 
+ {{{
+ module:  index
+ }}}
+ 
+ 3. '''action'''. El nombre de la acción al cual la pestaña pertenece. Este valor (si existe) es concatenado con el valor de la clave '''module''' y se agrega al segundo parámetro del helper link_to(). Ejemplo:
+ 
+ {{{
+ action:  list
+ }}}
+ 
+ 4. '''linkOptions'''. Todo su contenido es enviado al tercer parámetro del helper link_to(). Aquí es donde puedes usar AJAX. Verifica para que no coloques los mismos datos que colocaste en '''mt_a''' o '''st_a'''. Ejemplo:
+
+ {{{
+ title: 'My tab'
+ }}}
+ 
+ 5. '''parentTab'''. Pestaña padre a la cual pertenece una pestaña secundaria. Ejemplo:
+ 
+ {{{
+ parentTab:  index
+ }}}
+
+== Los archivos de configuración ==
+El archivo de configuración por defecto se llama '''"ctSite.yml"''' y se encuentra en: <my_project>/plugins/sfCssTabsPlugin/config
+
+Si vas a necesitar más de un panel de pestañas (principales y secundarias), solo necesitas crear un nuevo archivo de configuración en la misma ubicación.
+
+Estas deben comenzar con el prefijo '''ct''', luego sigue el nombre '''con el primer caracter en mayúsculas''' y finalmente la extensión '''.yml'''. Ejemplos:
+
+ * ctTabs2.yml
+ * ctType1.example.yml
+ 
+== ¿Cómo llamar al plugin? ==
+Si solo necesitas un panel de pestañas puedes llamarlo así:
+
+{{{
+#!php
+sfCssTabs::singleton()->render();
+}}}
+
+O también así:
+
+{{{
+#!php
+$cssTabs = sfCssTabs::singleton();
+$cssTabs->render();
+}}}
+
+Estos ejemplos anteriores solo llaman a la configuración del archivo por defecto. Si vas a agregar la configuración de otros
+paneles de pestañas, solo debes incluir su nombre en minúsculas así:
+
+{{{
+#!php
+sfCssTabs::singleton()->render();
+
+...
+
+sfCssTabs::singleton()->render('tabs2');
+}}}
+
+o también así:
+
+{{{
+#!php
+$cssTabs = sfCssTabs::singleton();
+$cssTabs->render();
+
+...
+
+$cssTabs->render('type1.example');
+}}}
+
+== Results ==
+El código XHTML:
+{{{
+#!text/html
+<div id="navcontainer" style="padding: 2px;">
+  <ul id="adminmenu">
+    <li id="active">
+      <a class="current" href="/edit">Manage</a>
+    </li>
+    <li>
+      <a href="/comments">Comments</a>
+    </li>
+    <li>
+      <a href="/blogroll">Blog Roll</a>
+    </li>
+  </ul>
+  <ul id="submenu">
+    <li id="activeII">
+      <a class="current" href="/edit">Posts</a>
+    </li>
+    <li>
+      <a href="/pages">Pages</a>
+    </li>
+    <li>
+      <a href="/uploads">Uploads</a>
+    </li>
+  </ul>
+</div>
+}}}
+
+Resultado gráfico:
+
+[[Image(screenshot.jpg)]]
+
+== Contacts ==
+ * Pedro Hernández (phpleo [at] gmail [dot] com ), [http://blog.phpleo.com/ http://blog.phpleo.com/]
+
+== TODO ==
+ * Integración con Admin Generation.
+ * Reconocimiento de credenciales.
+
+== Changelog ==
+
+=== 2007-09-09 | 0.1.6 Beta ===
+ * Reconocimiento de la primera acción.
+ * Cambio de la configuración de archivos PHP a archivos YAML.
+ * Carga de múltiples paneles de pestañas.
+ * Cambio en la llamada del plugin.
+ * Modificada la descripción y documentación.
+ * Agregados 2 archivos de ejemplo en formato YAML.
+
+=== 2007-08-22 | 0.0.5 Alpha ===
+ * Corrección de errores en la documentación.
+ * Cambio de la licencia a la de MIT.
+
+=== 2007-08-22 | 0.0.4 Alpha ===
+ * Primera liberación pública.

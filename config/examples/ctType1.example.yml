@@ -1,0 +1,63 @@
+cssTabs:
+
+  # general config
+  configTabs:
+    div:           {id: navcontainer}
+    mt_ul:         {id: adminmenu}
+    mt_li:         {id: active}
+    mt_a:          {class: current}
+    st_ul:         {id: submenu}
+    st_li:         {id: activeII}
+    st_a:          {class: current}
+
+  # Configuration of the main Tabs
+  mainTabs:
+    - label:       Manage
+      module:      edit
+      action:      ''
+      linkOptions: {}
+  
+    - label:       Comments
+      module:      comments
+      action:      ''
+      linkOptions: {}
+      
+    - label:       Blog Roll
+      module:      blogroll
+      action:      ''
+      linkOptions: {}
+
+  # Configuration of the sub Tabs
+  subTabs:
+  
+    # sub tabs for main tab 1: edit
+    - label:       Posts
+      module:      edit
+      action:      ''
+      linkOptions: {}
+      parentTab:   edit
+    
+    - label:       Pages
+      module:      pages
+      action:      ''
+      linkOptions: {}
+      parentTab:   edit
+      
+    - label:       Uploads
+      module:      uploads
+      action:      ''
+      linkOptions: {}
+      parentTab:   edit
+      
+    # sub tabs for main tab 2: comments
+    - label:       Comments
+      module:      comments
+      action:      ''
+      linkOptions: {}
+      parentTab:   comments
+      
+    - label:       Awaiting moderation
+      module:      awaitingmoderation
+      action:      ''
+      linkOptions: {}
+      parentTab:   comments

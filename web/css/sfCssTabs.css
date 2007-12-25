@@ -1,0 +1,85 @@
+/**
+ * Credits and license of this css: http://www.wordpress.org
+ * Example css for sfCssTabsPlugin: http://trac.symfony-project.com/trac/wiki/sfCssTabsPlugin
+ * Code extracted of: wp-admin.css v2.2.3
+ *
+ * You can obtain more examples in:
+ * http://css.maxdesign.com.au/listamatic/index.htm
+ */
+ 
+#adminmenu {
+	background: #83B4D8;
+	border-top: 3px solid #448abd;
+	margin: 0;
+	padding: .2em .2em .3em 2em;
+}
+
+#adminmenu .current, #submenu .current {
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#adminmenu a {
+	color: #000;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 0;
+	padding: 3px 5px;
+	border-bottom: none;
+}
+
+#adminmenu a:hover, #adminmenu a.current {
+	background: #ddeaf4;
+	color: #333;
+}
+
+#adminmenu li, #submenu li {
+	display: inline;
+	line-height: 200%;
+	list-style: none;
+	text-align: center;
+	white-space: nowrap;
+}
+
+#adminmenu a.current {
+	background: #0d324f;
+	border-right: 2px solid #4f96c8;
+	border-top: 1px solid #96c0de;
+	color: #fff;
+	padding-bottom: 8px;
+}
+
+#submenu, #minisub {
+	background: #0d324f;
+	border-bottom: none;
+	margin: 0;
+	padding: 3px 2em 0 3em;
+}
+
+#minisub {
+	height: 6px;
+}
+
+#submenu .current {
+	background: #f9fcfe;
+	border-top: 1px solid #045290;
+	border-right: 2px solid #045290;
+	color: #000;
+}
+
+#submenu a {
+	border: none;
+	color: #fff;
+	font-size: 12px;
+	padding: .3em .4em .4em;
+}
+
+#submenu a:hover {
+	background: #ddeaf4;
+	color: #393939;
+}
+
+#submenu li {
+	line-height: 180%;
+	height: 25px;
+}

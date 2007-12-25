@@ -1,0 +1,63 @@
+cssTabs:
+
+  # general config
+  configTabs:
+    div:           {id: navcontainer}
+    mt_ul:         {id: adminmenu}
+    mt_li:         {id: active}
+    mt_a:          {class: current}
+    st_ul:         {id: submenu}
+    st_li:         {id: activeII}
+    st_a:          {class: current}
+
+  # Configuration of the main Tabs
+  mainTabs:
+    - label:       Main Page
+      module:      index
+      action:      ''
+      linkOptions: {}
+  
+    - label:       User
+      module:      usuario
+      action:      listado
+      linkOptions: {}
+      
+    - label:       Profile
+      module:      perfil
+      action:      listado
+      linkOptions: {}
+
+  # Configuration of the sub Tabs
+  subTabs:
+  
+    # sub tabs for main tab 1: User
+    - label:       Listing of users
+      module:      usuario
+      action:      listado
+      linkOptions: {}
+      parentTab:   usuario
+    
+    - label:       Ordered listing
+      module:      usuario
+      action:      listado_ordenado
+      linkOptions: {}
+      parentTab:   usuario
+      
+    - label:       listing of inactive
+      module:      usuario
+      action:      listado_inactivos
+      linkOptions: {}
+      parentTab:   usuario
+      
+    # sub tabs for main tab 2: Profile
+    - label:       My profile
+      module:      perfil
+      action:      listado
+      linkOptions: {}
+      parentTab:   perfil
+      
+    - label:       New profile
+      module:      perfil
+      action:      nuevo_perfil
+      linkOptions: {}
+      parentTab:   perfil

@@ -1,0 +1,252 @@
+= sfCssTabs plugin =
+
+Plugin that generates of dynamic form tabPanel with lists (valid XHTML), to the style "Wordpress Admin", depending on the present module and (if it exists) the first action of this.
+
+The tabPanel can contain 2 levels: main tabs and secondary tabs.
+
+== Screenshot ==
+
+[[Image(screenshot.jpg)]]
+
+== Installation ==
+Install plugin:
+
+{{{
+$ php symfony plugin-install http://plugins.symfony-project.com/sfCssTabsPlugin
+}}}
+
+== Use ==
+ 1. Opens the file '''layout.php''' located in: <my_project>/apps/<myapp>/templates/
+ 
+ 2. It places the necessary code between the labels <body></body> in order to call to plugin. It reviews the section: How to call to plugin?
+ 
+ 3. Copy the example file '''sfCssTabs.css''' located in: <my_project>/web/sfCssTabsPlugin/css/; in the folder: 
+    <my_project>/web/css/
+    
+ 4. Opens the file '''view.yml''' located in: <my_project>/apps/<myapp>/config/
+ 
+ 5. It adds file CSS of example in the section '''stylesheets'''
+
+ {{{
+ stylesheets: [main, sfCssTabs]
+ }}}
+
+== Configuration ==
+Opens the file '''ctSite.yml''' located in: <my_project>/plugins/sfCssTabsPlugin/config/
+
+=== General configuration: ''configTabs'' ===
+{{{
+configTabs:
+  div:    {}
+  mt_ul:  {}
+  mt_li:  {}
+  mt_a:   {}
+  st_ul:  {}
+  st_li:  {}
+  st_a:   {}
+}}}
+
+ 1. The content within '''{}''' it works exactly just as the third parameter of helper link_to().
+ 
+ 2. '''div'''. Empty by default. If content is added within '''{}''', the tabs are surrounded with the labels <div></div> along with that content. Example:
+ 
+ {{{
+ div:  {id: navcontainer, style: 'padding:2px'}
+ }}}
+ 
+The three following keys begin with '''mt_''' and this configuration is applied only to the main tabs.
+ 
+ 1. '''mt_ul'''. It is applied to the labels <ul></ul>. Example:
+ 
+ {{{
+ mt_ul:  {id: adminmenu}
+ }}}
+ 
+ 2. '''mt_li'''. It is applied to the labels <li></li> of the main tabs and that agree with the present module or module/action. Example:
+ 
+ {{{
+ mt_li:  {id: active}
+ }}}
+ 
+ 3. '''mt_a'''. It is applied to the labels <a></a> of the main tabs and that agree with the present module or module/action. Example:
+ 
+ {{{
+ mt_a:  {class: current}
+ }}}
+ 
+The three following keys begin with '''st_''' and this configuration is applied only to the secondary tabs.
+ 
+ 1. '''st_ul'''. It is applied to the labels <ul></ul> of the secondary tabs. Example:
+ 
+ {{{
+ st_ul:  {id: submenu}
+ }}}
+ 
+ 2. '''st_li'''. It is applied to the labels <li></li> of the secondary tabs and that agree with the present module or module/action. Example:
+ 
+ {{{
+ st_li:  {id: activeII}
+ }}}
+ 
+ 3. '''st_a'''. It is applied to the labels <a></a> of the secondary tabs and that agree with the present module or module/action. Example:
+ 
+ {{{
+ st_a:  {class: current}
+ }}}
+
+=== Configuration of the main and sub tabs: ''mainTabs'' & ''subTabs'' ===
+{{{
+# Configuration of the main tabs
+mainTabs:
+  - label:       ''
+    module:      ''
+    action:      ''
+    linkOptions: {}
+
+# Configuration of the sub tabs
+subTabs:
+  - label:       ''
+    module:      ''
+    action:      ''
+    linkOptions: {}
+    parentTab:   ''
+}}}
+
+ 1. '''label'''. This value is added to the first parameter of helper link_to() and it is the text that is of the tab. Example:
+ 
+ {{{
+ label:  'Main Page'
+ }}}
+ 
+ 2. '''module'''. The name of the module to which the tab belongs. This value is added the second parameter of helper link_to(). Example:
+ 
+ {{{
+ module:  index
+ }}}
+ 
+ 3. '''action'''. The name of the action to which the tab belongs. This value (if it exists) is concatenated with the value of the key '''module''' and it is added to the second parameter of helper link_to(). Example:
+ 
+ {{{
+ action:  list
+ }}}
+ 
+ 4. '''linkOptions'''. All its content is sent to the third parameter of helper link_to(). Here it is where you can use AJAX. It verifies so that you such do not place data that you placed in '''mt_a''' or '''st_a'''. Example:
+
+ {{{
+ title: 'My tab'
+ }}}
+ 
+ 5. '''parentTab'''. main tab to who a sub tab belongs. Example:
+ 
+ {{{
+ parentTab:  index
+ }}}
+
+== The configuration files ==
+The configuration file by default is called '''ctSite.yml''' and it is located in: <my_project>/plugins/sfCssTabsPlugin/config/
+
+If you are going to need more a panel of eyelashes (main and secondary), only you need to create a new configuration file in the same location.
+
+These must begin with the prefix '''ct''', soon it follows the name '''with the first character in capital letters''' and finally the extension '''.yml'''. Examples:
+
+ * ctTabs2.yml
+ * ctType1.example.yml
+ 
+== How to call to plugin? ==
+If single you need a tabPanel you can call it thus:
+
+{{{
+#!php
+sfCssTabs::singleton()->render();
+}}}
+
+Or also thus:
+
+{{{
+#!php
+$cssTabs = sfCssTabs::singleton();
+$cssTabs->render();
+}}}
+
+These previous examples single call to the configuration of the file by default. If you are going to add the configuration of others
+tabPanel, single you must include its name in small letters thus:
+
+{{{
+#!php
+sfCssTabs::singleton()->render();
+
+...
+
+sfCssTabs::singleton()->render('tabs2');
+}}}
+
+Or also thus:
+
+{{{
+#!php
+$cssTabs = sfCssTabs::singleton();
+$cssTabs->render();
+
+...
+
+$cssTabs->render('type1.example');
+}}}
+
+== Results ==
+The XHTML code:
+
+{{{
+#!text/html
+<div id="navcontainer" style="padding: 2px;">
+  <ul id="adminmenu">
+    <li id="active">
+      <a class="current" href="/edit">Manage</a>
+    </li>
+    <li>
+      <a href="/comments">Comments</a>
+    </li>
+    <li>
+      <a href="/blogroll">Blog Roll</a>
+    </li>
+  </ul>
+  <ul id="submenu">
+    <li id="activeII">
+      <a class="current" href="/edit">Posts</a>
+    </li>
+    <li>
+      <a href="/pages">Pages</a>
+    </li>
+    <li>
+      <a href="/uploads">Uploads</a>
+    </li>
+  </ul>
+</div>
+}}}
+
+Result:
+
+[[Image(screenshot.jpg)]]
+
+== Contacts ==
+ * Pedro Hernández (phpleo [at] gmail [dot] com ), [http://blog.phpleo.com/ http://blog.phpleo.com/]
+
+== TODO ==
+ * Integration with Admin Generation.
+ * Recognition of credentials.
+
+== Changelog ==
+
+=== 2007-09-09 | 0.1.6 Beta ===
+ * Recognition of the first action.
+ * Change of the configuration from files PHP to files YAML.
+ * Load of multiple tabPanels.
+ * Change in the call of plugin.
+ * Modified the description and documentation.
+ * Added 2 archives of example in format YAML.
+
+=== 2007-08-22 | 0.0.5 Alpha ===
+ * Correction of errors in the documentation.
+ * Change of the license to the one of MIT.
+
+=== 2007-08-22 | 0.0.4 Alpha ===
+ * First public release.

@@ -1,0 +1,26 @@
+cssTabs:
+
+  # general config
+  configTabs:
+    div:           {}
+    mt_ul:         {}
+    mt_li:         {}
+    mt_a:          {}
+    st_ul:         {}
+    st_li:         {}
+    st_a:          {}
+
+  # Configuration of the main Tabs
+  mainTabs:
+    - label:       ''
+      module:      ''
+      action:      ''
+      linkOptions: {}
+
+  # Configuration of the sub Tabs
+  subTabs:
+    - label:       ''
+      module:      ''
+      action:      ''
+      linkOptions: {}
+      parentTab:   ''
